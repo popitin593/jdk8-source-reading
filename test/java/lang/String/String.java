@@ -499,38 +499,23 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	}
 
 	/**
-	 * 等同于 {@link #valueOf(char[])}.
-	 *
-	 * @param data 字符数组
-	 *
-	 * @return a {@code String} that contains the characters of the
-	 * character array.
+	 * 等同于valueOf(char[])
 	 */
 	public static String copyValueOf(char data[]) {
 		return new String(data);
 	}
 
 	/**
-	 * Returns the string representation of the {@code boolean} argument.
-	 *
-	 * @param b a {@code boolean}.
-	 *
-	 * @return if the argument is {@code true}, a string equal to
-	 * {@code "true"} is returned; otherwise, a string equal to
-	 * {@code "false"} is returned.
+	 * 返回boolean值代表的内容
 	 */
 	public static String valueOf(boolean b) {
 		return b ? "true" : "false";
 	}
 
 	/**
-	 * Returns the string representation of the {@code char}
-	 * argument.
+	 * 返回char类型字段的内容
 	 *
-	 * @param c a {@code char}.
-	 *
-	 * @return a string of length {@code 1} containing
-	 * as its single character the argument {@code c}.
+	 * @return 返回字符串长度为1
 	 */
 	public static String valueOf(char c) {
 		char data[] = { c };
@@ -538,16 +523,7 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	}
 
 	/**
-	 * Returns the string representation of the {@code int} argument.
-	 * <p>
-	 * The representation is exactly the one returned by the
-	 * {@code Integer.toString} method of one argument.
-	 *
-	 * @param i an {@code int}.
-	 *
-	 * @return a string representation of the {@code int} argument.
-	 *
-	 * @see java.lang.Integer#toString(int, int)
+	 * 返回int类型参数代表的内容的字符串
 	 */
 	public static String valueOf(int i) {
 		return Integer.toString(i);
@@ -602,7 +578,7 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	}
 
 	/**
-	 * Returns the length of this string.
+	 * 返回字符串的长度
 	 * The length is equal to the number of <a href="Character.html#unicode">Unicode
 	 * code units</a> in the string.
 	 *
@@ -614,27 +590,17 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	}
 
 	/**
-	 * Returns {@code true} if, and only if, {@link #length()} is {@code 0}.
-	 *
-	 * @return {@code true} if {@link #length()} is {@code 0}, otherwise
-	 * {@code false}
-	 *
-	 * @since 1.6
+	 * 在字符串长度为0的时候返回true
 	 */
 	public boolean isEmpty() {
 		return value.length == 0;
 	}
 
 	/**
-	 * Returns the {@code char} value at the
-	 * specified index. An index ranges from {@code 0} to
-	 * {@code length() - 1}. The first {@code char} value of the sequence
-	 * is at index {@code 0}, the next at index {@code 1},
-	 * and so on, as for array indexing.
-	 * <p>
-	 * <p>If the {@code char} value specified by the index is a
-	 * <a href="Character.html#unicode">surrogate</a>, the surrogate
-	 * value is returned.
+	 * 返回索引处的char值
+	 * 索引范围是0到长度-1
+	 * 第一个char的索引为0, 下一个以此类推, 对于数组的索引。
+	 * 如果索引是代理，代理值就被返回
 	 *
 	 * @param index the index of the {@code char} value.
 	 *
@@ -653,11 +619,8 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	}
 
 	/**
-	 * Returns the character (Unicode code point) at the specified
-	 * index. The index refers to {@code char} values
-	 * (Unicode code units) and ranges from {@code 0} to
-	 * {@link #length()}{@code  - 1}.
-	 * <p>
+	 * 返回指定索引处的字符（Unicode代码点）.
+	 * char的index索引范围是0到字符串长度-1
 	 * <p> If the {@code char} value specified at the given index
 	 * is in the high-surrogate range, the following index is less
 	 * than the length of this {@code String}, and the
@@ -666,14 +629,11 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * corresponding to this surrogate pair is returned. Otherwise,
 	 * the {@code char} value at the given index is returned.
 	 *
-	 * @param index the index to the {@code char} values
+	 * @param index 索引到char字符的值
 	 *
-	 * @return the code point value of the character at the
-	 * {@code index}
+	 * @return 在index中字符的代码点
 	 *
-	 * @throws IndexOutOfBoundsException if the {@code index}
-	 * argument is negative or not less than the length of this
-	 * string.
+	 * @throws IndexOutOfBoundsException 如果index参数为负，或者不小于该字符串的长度
 	 * @since 1.5
 	 */
 	public int codePointAt(int index) {
@@ -746,6 +706,7 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	}
 
 	/**
+	 * 返回索引，被偏移量偏移
 	 * Returns the index within this {@code String} that is
 	 * offset from the given {@code index} by
 	 * {@code codePointOffset} code points. Unpaired surrogates
