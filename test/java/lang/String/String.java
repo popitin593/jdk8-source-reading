@@ -12,8 +12,7 @@ import java.util.regex.PatternSyntaxException;
  * String buffers 支持可变的字符串。
  * 因为字符串对象是不可变的，所以它可以被共享。
  * 比如：
- * String str = "abc";
- * 等价于：
+ * String str = "abc";等价于：
  * char data[] = {'a', 'b', 'c'};
  * String str = new String(data);
  * 下面是一些如何使用字符串的例子：
@@ -23,40 +22,25 @@ import java.util.regex.PatternSyntaxException;
  * String c = "abc".substring(2,3);
  * String d = cde.substring(1, 2);
  * <p>
- * String类包含方法对每个字符序列进行检查，为了比较字符串，为了搜索字符串，为了提取子字符串，
- * The class {@code String} includes methods for examining
- * individual characters of the sequence, for comparing strings, for
- * searching strings, for extracting substrings, and for creating a
- * copy of a string with all characters translated to uppercase or to
- * lowercase. Case mapping is based on the Unicode Standard version
- * specified by the {@link java.lang.Character Character} class.
+ * String类包含方法对每个字符序列进行检查，
+ * 为了比较字符串，
+ * 为了搜索字符串，
+ * 为了提取子字符串，
+ * 或是为了创建一个字符串副本将字符翻译成大写或者小写，
+ * 为了基于指定java.lang.Character Character类为Unicode标准版本的映射。
  * <p>
- * The Java language provides special support for the string
- * concatenation operator (&nbsp;+&nbsp;), and for conversion of
- * other objects to strings. String concatenation is implemented
- * through the {@code StringBuilder}(or {@code StringBuffer})
- * class and its {@code append} method.
- * String conversions are implemented through the method
- * {@code toString}, defined by {@code Object} and
- * inherited by all classes in Java. For additional information on
- * string concatenation and conversion, see Gosling, Joy, and Steele,
- * <i>The Java Language Specification</i>.
+ * Java语言为字符串的连接符号（&，&&）提供特殊支持，将其他对象转换成字符串。
+ * 字符串拼接的实现是通过StringBuilder和StringBuffer以及它的append方法。
  * <p>
- * <p> Unless otherwise noted, passing a <tt>null</tt> argument to a constructor
- * or method in this class will cause a {@link NullPointerException} to be
- * thrown.
+ * 字符串的转换是通过toString方法实现的，由Object对象定义，并且由java中的所有类集成。
+ * 有关字符串转换和连接的附加信息，请参见Gosling，Joy，和Steele。
+ * <i>Java语言规范</i>.
  * <p>
- * <p>A {@code String} represents a string in the UTF-16 format
- * in which <em>supplementary characters</em> are represented by <em>surrogate
- * pairs</em> (see the section <a href="Character.html#unicode">Unicode
- * Character Representations</a> in the {@code Character} class for
- * more information).
- * Index values refer to {@code char} code units, so a supplementary
- * character uses two positions in a {@code String}.
- * <p>The {@code String} class provides methods for dealing with
- * Unicode code points (i.e., characters), in addition to those for
- * dealing with Unicode code units (i.e., {@code char} values).
- *
+ * <p> 除非另外有说明, 将null参数传给构造器或者方法，这个类会报空指针异常。
+ * <p>
+ * <p>String字符串表示UTF-16字符格式而且补充字符由代理对表示 (有关更多信息，请参见字符类中的Unicode字符表示)。
+ * 索引值代表的是char代码单元，所以一个补充字符串用了String的两个字段。
+ * <p>这String类提供的方法处理了Unicode代码点（i.e., charaters），除了哪些处理Unicode代码单元的。
  * @author Lee Boynton
  * @author Arthur van Hoff
  * @author Martin Buchholz
@@ -77,7 +61,6 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * and will result in an unsatisfactory ordering for certain locales.
 	 * The java.text package provides <em>Collators</em> to allow
 	 * locale-sensitive ordering.
-	 *
 	 * @see java.text.Collator#compare(String, String)
 	 * @since 1.2
 	 */
@@ -146,7 +129,6 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 
 	/**
 	 * 整数、开始位置、总数作为入参的构造器
-	 *
 	 * @param codePoints
 	 * @param offset
 	 * @param count
@@ -164,7 +146,8 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 				return;
 			}
 		}
-		// Note: offset or count might be near -1>>>1.
+		// 注意:偏移量或计数可能接近- 1>>> 1。
+
 		if (offset > codePoints.length - count) {
 			throw new StringIndexOutOfBoundsException(offset + count);
 		}
@@ -199,7 +182,6 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 
 	/**
 	 * ASC码作为入参的构造器
-	 *
 	 * @param ascii
 	 * @param hibyte
 	 * @param offset
@@ -226,7 +208,6 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 
 	/**
 	 * ASC编码作为入参的构造器
-	 *
 	 * @param ascii
 	 * @param hibyte
 	 */
@@ -237,7 +218,6 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 
 	/**
 	 * 字节数组作为入参的构造器
-	 *
 	 * @param bytes
 	 * @param offset
 	 * @param length
@@ -310,7 +290,7 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 		this.value = value;
 	}
 
-	/* 用于限制字节数组的公告私有实用方法
+	/* 用于对字节数组进行边界检查的通用私有实用程序方法，并且构造函数使用的偏移量和长度值是请求字符串(byte[]，. . .)。
 	 */
 	private static void checkBounds(byte[] bytes, int offset, int length) {
 		if (length < 0) {
@@ -329,12 +309,11 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * 由字符串和StringBuilder共享的字符串来搜索，
 	 * 来源是被搜索的字符串，
 	 * 目标也是被搜索的字符串。
-	 *
-	 * @param source 被搜索的字符串
+	 * @param source       被搜索的字符串
 	 * @param sourceOffset 抵消源字符串
-	 * @param sourceCount 来源的总数
-	 * @param target 搜索目标
-	 * @param fromIndex 搜索指针
+	 * @param sourceCount  来源的总数
+	 * @param target       搜索目标
+	 * @param fromIndex    搜索指针
 	 */
 	static int indexOf(char[] source, int sourceOffset, int sourceCount, String target, int fromIndex) {
 		return indexOf(source, sourceOffset, sourceCount, target.value, 0, target.value.length, fromIndex);
@@ -342,14 +321,13 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 
 	/**
 	 * 搜索char数组的位置
-	 *
-	 * @param source 被搜索的字符串
+	 * @param source       被搜索的字符串
 	 * @param sourceOffset 抵消源字符串
-	 * @param sourceCount 来源的总数
-	 * @param target 搜索目标
+	 * @param sourceCount  来源的总数
+	 * @param target       搜索目标
 	 * @param targetOffset 抵消目标字符串
-	 * @param targetCount 目标总数
-	 * @param fromIndex 搜索指针
+	 * @param targetCount  目标总数
+	 * @param fromIndex    搜索指针
 	 */
 	static int indexOf(char[] source, int sourceOffset, int sourceCount, char[] target, int targetOffset, int targetCount, int fromIndex) {
 		if (fromIndex >= sourceCount) {
@@ -396,13 +374,11 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 
 	/**
 	 * 搜索char数组的最后位置
-	 *
-	 * @param source 被搜索的字符串
+	 * @param source       被搜索的字符串
 	 * @param sourceOffset 抵消源字符串
-	 * @param sourceCount 来源的总数
-	 * @param target 搜索目标
-	 * @param fromIndex 搜索指针
-	 *
+	 * @param sourceCount  来源的总数
+	 * @param target       搜索目标
+	 * @param fromIndex    搜索指针
 	 * @return 字符串位置
 	 */
 	static int lastIndexOf(char[] source, int sourceOffset, int sourceCount, String target, int fromIndex) {
@@ -411,15 +387,13 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 
 	/**
 	 * 搜索char数组的最后位置
-	 *
-	 * @param source 被搜索的字符串
+	 * @param source       被搜索的字符串
 	 * @param sourceOffset 抵消源字符串
-	 * @param sourceCount 来源的总数
-	 * @param target 搜索目标
+	 * @param sourceCount  来源的总数
+	 * @param target       搜索目标
 	 * @param targetOffset 抵消目标字符串
-	 * @param targetCount 目标总数
-	 * @param fromIndex 搜索指针
-	 *
+	 * @param targetCount  目标总数
+	 * @param fromIndex    搜索指针
 	 * @return
 	 */
 	static int lastIndexOf(char[] source, int sourceOffset, int sourceCount, char[] target, int targetOffset, int targetCount, int fromIndex) {
@@ -466,10 +440,8 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	/**
 	 * 返回一个新的副本是指定的不同副本拼接而成
 	 * 内部实例化一个StringJoiner对象，用于循环拼接
-	 *
 	 * @param delimiter 分界符
-	 * @param elements 多个拼接元素
-	 *
+	 * @param elements  多个拼接元素
 	 * @return
 	 */
 	public static String join(CharSequence delimiter, CharSequence... elements) {
@@ -487,10 +459,8 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 
 	/**
 	 * 返回一个新的副本是指定的不同副本拼接而成
-	 *
 	 * @param delimiter 分界符
-	 * @param elements List类型的元素
-	 *
+	 * @param elements  List类型的元素
 	 * @return
 	 */
 	public static String join(CharSequence delimiter, Iterable<? extends CharSequence> elements) {
@@ -506,18 +476,15 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	/**
 	 * 使用指定格式的字符和参数，返回格式化后的字符串
 	 * 一直使用的区域是返回的
-	 *
-	 * @param format 格式化的字符串
-	 * @param args 格式字符串中使用格式说明符引用的参数，
-	 * 如果参数多余格式说明符号，多余参数就被忽略。
-	 * 变量可能为0。
-	 * 参数的最大数量被定义为Java数组的最大限度根据JAVA&trade;虚拟机规范。
-	 * null的行为会被转换。
-	 *
-	 * @throws java.util.IllegalFormatException 如果字符串包含非法字符,与给定的参数不相容的格式说明符,
-	 * 格式字符串或其他非法条件的参数不足.  对于所有可能的格式错误的规范,查看...formatter类规范的一部分。
-	 * <p>
 	 * 原理：实例Formatter对象，使用format方法
+	 * @param format 格式化的字符串
+	 * @param args   格式字符串中使用格式说明符引用的参数，
+	 *               如果参数多余格式说明符号，多余参数就被忽略。
+	 *               变量可能为0。
+	 *               参数的最大数量被定义为Java数组的最大限度根据JAVA&trade;虚拟机规范。
+	 *               null的行为会被转换。
+	 * @throws java.util.IllegalFormatException 如果字符串包含非法字符,与给定的参数不相容的格式说明符,
+	 *                                          格式字符串或其他非法条件的参数不足.  对于所有可能的格式错误的规范,查看...formatter类规范的一部分。
 	 */
 	public static String format(String format, Object... args) {
 		return new Formatter().format(format, args).toString();
@@ -551,13 +518,10 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * {@code count} 参数指定字符串长度。
 	 * 复制字符串数组;
 	 * 随后对字符数组的修改不会影响返回的字符串。
-	 *
-	 * @param data 字符数组。
+	 * @param data   字符数组。
 	 * @param offset 子数组的初始偏移量。
-	 * @param count 子数组的长度
-	 *
+	 * @param count  子数组的长度
 	 * @return 一个字符串包含指定字数组的字符。
-	 *
 	 * @throws IndexOutOfBoundsException 如果offset或者count为负的，或者count大于data长度
 	 */
 	public static String valueOf(char data[], int offset, int count) {
@@ -566,13 +530,10 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 
 	/**
 	 * 等同于valueOf(char[], int, int)
-	 *
-	 * @param data 字符数组。
+	 * @param data   字符数组。
 	 * @param offset 子数组的初始偏移量。
-	 * @param count length of the subarray.
-	 *
+	 * @param count  length of the subarray.
 	 * @return 一个{@String}，它包含字符数组的指定子数组的字符。
-	 *
 	 * @throws IndexOutOfBoundsException 如果offset或者count为负的，或者count大于data长度
 	 */
 	public static String copyValueOf(char data[], int offset, int count) {
@@ -595,7 +556,6 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 
 	/**
 	 * 返回char类型字段的内容
-	 *
 	 * @return 返回字符串长度为1
 	 */
 	public static String valueOf(char c) {
@@ -614,11 +574,8 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * 返回Long型参数的字符串表示
 	 * <p>
 	 * Long.toString的另一种表示方式
-	 *
 	 * @param l 一个Long型入参
-	 *
 	 * @return Long型入参的String表达方式
-	 *
 	 * @see java.lang.Long#toString(long)
 	 */
 	public static String valueOf(long l) {
@@ -629,11 +586,8 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * 返回float参数的字符串表示
 	 * <p>
 	 * Float.String的另一种表达方式
-	 *
 	 * @param f 单精度、32位、符合IEEE 754标准的浮点数
-	 *
 	 * @return float型入参的字符串表达方式
-	 *
 	 * @see java.lang.Float#toString(float)
 	 */
 	public static String valueOf(float f) {
@@ -645,11 +599,8 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * <p>
 	 * The representation is exactly the one returned by the
 	 * {@code Double.toString} method of one argument.
-	 *
 	 * @param d a {@code double}.
-	 *
 	 * @return a  string representation of the {@code double} argument.
-	 *
 	 * @see java.lang.Double#toString(double)
 	 */
 	public static String valueOf(double d) {
@@ -660,12 +611,11 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * Code shared by String and AbstractStringBuilder to do searches. The
 	 * source is the character array being searched, and the target
 	 * is the string being searched for.
-	 *
-	 * @param source the characters being searched.
+	 * @param source       the characters being searched.
 	 * @param sourceOffset offset of the source string.
-	 * @param sourceCount count of the source string.
-	 * @param target the characters being searched for.
-	 * @param fromIndex the index to begin searching from.
+	 * @param sourceCount  count of the source string.
+	 * @param target       the characters being searched for.
+	 * @param fromIndex    the index to begin searching from.
 	 */
 	static int indexOf(char[] source, int sourceOffset, int sourceCount, String target, int fromIndex) {
 		return indexOf(source, sourceOffset, sourceCount, target.value, 0, target.value.length, fromIndex);
@@ -675,14 +625,13 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * Code shared by String and StringBuffer to do searches. The
 	 * source is the character array being searched, and the target
 	 * is the string being searched for.
-	 *
-	 * @param source the characters being searched.
+	 * @param source       the characters being searched.
 	 * @param sourceOffset offset of the source string.
-	 * @param sourceCount count of the source string.
-	 * @param target the characters being searched for.
+	 * @param sourceCount  count of the source string.
+	 * @param target       the characters being searched for.
 	 * @param targetOffset offset of the target string.
-	 * @param targetCount count of the target string.
-	 * @param fromIndex the index to begin searching from.
+	 * @param targetCount  count of the target string.
+	 * @param fromIndex    the index to begin searching from.
 	 */
 	static int indexOf(char[] source, int sourceOffset, int sourceCount, char[] target, int targetOffset, int targetCount, int fromIndex) {
 		if (fromIndex >= sourceCount) {
@@ -727,12 +676,11 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * Code shared by String and AbstractStringBuilder to do searches. The
 	 * source is the character array being searched, and the target
 	 * is the string being searched for.
-	 *
-	 * @param source the characters being searched.
+	 * @param source       the characters being searched.
 	 * @param sourceOffset offset of the source string.
-	 * @param sourceCount count of the source string.
-	 * @param target the characters being searched for.
-	 * @param fromIndex the index to begin searching from.
+	 * @param sourceCount  count of the source string.
+	 * @param target       the characters being searched for.
+	 * @param fromIndex    the index to begin searching from.
 	 */
 	static int lastIndexOf(char[] source, int sourceOffset, int sourceCount, String target, int fromIndex) {
 		return lastIndexOf(source, sourceOffset, sourceCount, target.value, 0, target.value.length, fromIndex);
@@ -742,14 +690,13 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * Code shared by String and StringBuffer to do searches. The
 	 * source is the character array being searched, and the target
 	 * is the string being searched for.
-	 *
-	 * @param source the characters being searched.
+	 * @param source       the characters being searched.
 	 * @param sourceOffset offset of the source string.
-	 * @param sourceCount count of the source string.
-	 * @param target the characters being searched for.
+	 * @param sourceCount  count of the source string.
+	 * @param target       the characters being searched for.
 	 * @param targetOffset offset of the target string.
-	 * @param targetCount count of the target string.
-	 * @param fromIndex the index to begin searching from.
+	 * @param targetCount  count of the target string.
+	 * @param fromIndex    the index to begin searching from.
 	 */
 	static int lastIndexOf(char[] source, int sourceOffset, int sourceCount, char[] target, int targetOffset, int targetCount, int fromIndex) {
 		/*
@@ -807,15 +754,12 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * }</pre></blockquote>
 	 *
 	 * Note that if an element is null, then {@code "null"} is added.
-	 *
 	 * @param delimiter the delimiter that separates each element
-	 * @param elements the elements to join together.
-	 *
+	 * @param elements  the elements to join together.
 	 * @return a new {@code String} that is composed of the {@code elements}
 	 * separated by the {@code delimiter}
-	 *
 	 * @throws NullPointerException If {@code delimiter} or {@code elements}
-	 * is {@code null}
+	 *                              is {@code null}
 	 * @see java.util.StringJoiner
 	 * @since 1.8
 	 */
@@ -851,17 +795,14 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * }</pre></blockquote>
 	 *
 	 * Note that if an individual element is {@code null}, then {@code "null"} is added.
-	 *
 	 * @param delimiter a sequence of characters that is used to separate each
-	 * of the {@code elements} in the resulting {@code String}
-	 * @param elements an {@code Iterable} that will have its {@code elements}
-	 * joined together.
-	 *
+	 *                  of the {@code elements} in the resulting {@code String}
+	 * @param elements  an {@code Iterable} that will have its {@code elements}
+	 *                  joined together.
 	 * @return a new {@code String} that is composed from the {@code elements}
 	 * argument
-	 *
 	 * @throws NullPointerException If {@code delimiter} or {@code elements}
-	 * is {@code null}
+	 *                              is {@code null}
 	 * @see #join(CharSequence, CharSequence...)
 	 * @see java.util.StringJoiner
 	 * @since 1.8
@@ -882,27 +823,24 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * <p>
 	 * <p> The locale always used is the one returned by {@link
 	 * java.util.Locale#getDefault() Locale.getDefault()}.
-	 *
 	 * @param format A <a href="../util/Formatter.html#syntax">format string</a>
-	 * @param args Arguments referenced by the format specifiers in the format
-	 * string.  If there are more arguments than format specifiers, the
-	 * extra arguments are ignored.  The number of arguments is
-	 * variable and may be zero.  The maximum number of arguments is
-	 * limited by the maximum dimension of a Java array as defined by
-	 * <cite>The Java&trade; Virtual Machine Specification</cite>.
-	 * The behaviour on a
-	 * {@code null} argument depends on the <a
-	 * href="../util/Formatter.html#syntax">conversion</a>.
-	 *
+	 * @param args   Arguments referenced by the format specifiers in the format
+	 *               string.  If there are more arguments than format specifiers, the
+	 *               extra arguments are ignored.  The number of arguments is
+	 *               variable and may be zero.  The maximum number of arguments is
+	 *               limited by the maximum dimension of a Java array as defined by
+	 *               <cite>The Java&trade; Virtual Machine Specification</cite>.
+	 *               The behaviour on a
+	 *               {@code null} argument depends on the <a
+	 *               href="../util/Formatter.html#syntax">conversion</a>.
 	 * @return A formatted string
-	 *
-	 * @throws java.util.IllegalFormatException If a format string contains an illegal syntax, a format
-	 * specifier that is incompatible with the given arguments,
-	 * insufficient arguments given the format string, or other
-	 * illegal conditions.  For specification of all possible
-	 * formatting errors, see the <a
-	 * href="../util/Formatter.html#detail">Details</a> section of the
-	 * formatter class specification.
+	 * @throws java.util.IllegalFormatException If a format string c
+	 * compatible with the given arguments,
+	 *                                          insufficient arguments given the format string, or other
+	 *                                          illegal conditions.  For specification of all possible
+	 *                                          formatting errors, see the <a
+	 *                                          href="../util/Formatter.html#detail">Details</a> section of the
+	 *                                          formatter class specification.
 	 * @see java.util.Formatter
 	 * @since 1.5
 	 */
@@ -913,30 +851,27 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	/**
 	 * Returns a formatted string using the specified locale, format string,
 	 * and arguments.
-	 *
-	 * @param l The {@linkplain java.util.Locale locale} to apply during
-	 * formatting.  If {@code l} is {@code null} then no localization
-	 * is applied.
+	 * @param l      The {@linkplain java.util.Locale locale} to apply during
+	 *               formatting.  If {@code l} is {@code null} then no localization
+	 *               is applied.
 	 * @param format A <a href="../util/Formatter.html#syntax">format string</a>
-	 * @param args Arguments referenced by the format specifiers in the format
-	 * string.  If there are more arguments than format specifiers, the
-	 * extra arguments are ignored.  The number of arguments is
-	 * variable and may be zero.  The maximum number of arguments is
-	 * limited by the maximum dimension of a Java array as defined by
-	 * <cite>The Java&trade; Virtual Machine Specification</cite>.
-	 * The behaviour on a
-	 * {@code null} argument depends on the
-	 * <a href="../util/Formatter.html#syntax">conversion</a>.
-	 *
+	 * @param args   Arguments referenced by the format specifiers in the format
+	 *               string.  If there are more arguments than format specifiers, the
+	 *               extra arguments are ignored.  The number of arguments is
+	 *               variable and may be zero.  The maximum number of arguments is
+	 *               limited by the maximum dimension of a Java array as defined by
+	 *               <cite>The Java&trade; Virtual Machine Specification</cite>.
+	 *               The behaviour on a
+	 *               {@code null} argument depends on the
+	 *               <a href="../util/Formatter.html#syntax">conversion</a>.
 	 * @return A formatted string
-	 *
 	 * @throws java.util.IllegalFormatException If a format string contains an illegal syntax, a format
-	 * specifier that is incompatible with the given arguments,
-	 * insufficient arguments given the format string, or other
-	 * illegal conditions.  For specification of all possible
-	 * formatting errors, see the <a
-	 * href="../util/Formatter.html#detail">Details</a> section of the
-	 * formatter class specification
+	 *                                          specifier that is incompatible with the given arguments,
+	 *                                          insufficient arguments given the format string, or other
+	 *                                          illegal conditions.  For specification of all possible
+	 *                                          formatting errors, see the <a
+	 *                                          href="../util/Formatter.html#detail">Details</a> section of the
+	 *                                          formatter class specification
 	 * @see java.util.Formatter
 	 * @since 1.5
 	 */
@@ -946,13 +881,10 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 
 	/**
 	 * Returns the string representation of the {@code Object} argument.
-	 *
 	 * @param obj an {@code Object}.
-	 *
 	 * @return if the argument is {@code null}, then a string equal to
 	 * {@code "null"}; otherwise, the value of
 	 * {@code obj.toString()} is returned.
-	 *
 	 * @see java.lang.Object#toString()
 	 */
 	public static String valueOf(Object obj) {
@@ -964,9 +896,7 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * argument. The contents of the character array are copied; subsequent
 	 * modification of the character array does not affect the returned
 	 * string.
-	 *
 	 * @param data the character array.
-	 *
 	 * @return a {@code String} that contains the characters of the
 	 * character array.
 	 */
@@ -983,18 +913,15 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * specifies the length of the subarray. The contents of the subarray
 	 * are copied; subsequent modification of the character array does not
 	 * affect the returned string.
-	 *
-	 * @param data the character array.
+	 * @param data   the character array.
 	 * @param offset initial offset of the subarray.
-	 * @param count length of the subarray.
-	 *
+	 * @param count  length of the subarray.
 	 * @return a {@code String} that contains the characters of the
 	 * specified subarray of the character array.
-	 *
 	 * @throws IndexOutOfBoundsException if {@code offset} is
-	 * negative, or {@code count} is negative, or
-	 * {@code offset+count} is larger than
-	 * {@code data.length}.
+	 *                                   negative, or {@code count} is negative, or
+	 *                                   {@code offset+count} is larger than
+	 *                                   {@code data.length}.
 	 */
 	public static String valueOf(char data[], int offset, int count) {
 		return new String(data, offset, count);
@@ -1002,18 +929,15 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 
 	/**
 	 * Equivalent to {@link #valueOf(char[], int, int)}.
-	 *
-	 * @param data the character array.
+	 * @param data   the character array.
 	 * @param offset initial offset of the subarray.
-	 * @param count length of the subarray.
-	 *
+	 * @param count  length of the subarray.
 	 * @return a {@code String} that contains the characters of the
 	 * specified subarray of the character array.
-	 *
 	 * @throws IndexOutOfBoundsException if {@code offset} is
-	 * negative, or {@code count} is negative, or
-	 * {@code offset+count} is larger than
-	 * {@code data.length}.
+	 *                                   negative, or {@code count} is negative, or
+	 *                                   {@code offset+count} is larger than
+	 *                                   {@code data.length}.
 	 */
 	public static String copyValueOf(char data[], int offset, int count) {
 		return new String(data, offset, count);
@@ -1021,9 +945,7 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 
 	/**
 	 * Equivalent to {@link #valueOf(char[])}.
-	 *
 	 * @param data the character array.
-	 *
 	 * @return a {@code String} that contains the characters of the
 	 * character array.
 	 */
@@ -1033,9 +955,7 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 
 	/**
 	 * Returns the string representation of the {@code boolean} argument.
-	 *
 	 * @param b a {@code boolean}.
-	 *
 	 * @return if the argument is {@code true}, a string equal to
 	 * {@code "true"} is returned; otherwise, a string equal to
 	 * {@code "false"} is returned.
@@ -1047,9 +967,7 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	/**
 	 * Returns the string representation of the {@code char}
 	 * argument.
-	 *
 	 * @param c a {@code char}.
-	 *
 	 * @return a string of length {@code 1} containing
 	 * as its single character the argument {@code c}.
 	 */
@@ -1063,11 +981,8 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * <p>
 	 * The representation is exactly the one returned by the
 	 * {@code Integer.toString} method of one argument.
-	 *
 	 * @param i an {@code int}.
-	 *
 	 * @return a string representation of the {@code int} argument.
-	 *
 	 * @see java.lang.Integer#toString(int, int)
 	 */
 	public static String valueOf(int i) {
@@ -1079,11 +994,8 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * <p>
 	 * The representation is exactly the one returned by the
 	 * {@code Long.toString} method of one argument.
-	 *
 	 * @param l a {@code long}.
-	 *
 	 * @return a string representation of the {@code long} argument.
-	 *
 	 * @see java.lang.Long#toString(long)
 	 */
 	public static String valueOf(long l) {
@@ -1095,11 +1007,8 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * <p>
 	 * The representation is exactly the one returned by the
 	 * {@code Float.toString} method of one argument.
-	 *
 	 * @param f a {@code float}.
-	 *
 	 * @return a string representation of the {@code float} argument.
-	 *
 	 * @see java.lang.Float#toString(float)
 	 */
 	public static String valueOf(float f) {
@@ -1111,11 +1020,8 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * <p>
 	 * The representation is exactly the one returned by the
 	 * {@code Double.toString} method of one argument.
-	 *
 	 * @param d a {@code double}.
-	 *
 	 * @return a  string representation of the {@code double} argument.
-	 *
 	 * @see java.lang.Double#toString(double)
 	 */
 	public static String valueOf(double d) {
@@ -1126,7 +1032,6 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * 返回字符串的长度
 	 * The length is equal to the number of <a href="Character.html#unicode">Unicode
 	 * code units</a> in the string.
-	 *
 	 * @return the length of the sequence of characters represented by this
 	 * object.
 	 */
@@ -1146,15 +1051,12 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * 索引范围是0到长度-1
 	 * 第一个char的索引为0, 下一个以此类推, 对于数组的索引。
 	 * 如果索引是代理，代理值就被返回
-	 *
 	 * @param index the index of the {@code char} value.
-	 *
 	 * @return the {@code char} value at the specified index of this string.
 	 * The first {@code char} value is at index {@code 0}.
-	 *
 	 * @throws IndexOutOfBoundsException if the {@code index}
-	 * argument is negative or not less than the length of this
-	 * string.
+	 *                                   argument is negative or not less than the length of this
+	 *                                   string.
 	 */
 	public char charAt(int index) {
 		if ((index < 0) || (index >= value.length)) {
@@ -1173,11 +1075,8 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * low-surrogate range, then the supplementary code point
 	 * corresponding to this surrogate pair is returned. Otherwise,
 	 * the {@code char} value at the given index is returned.
-	 *
 	 * @param index 索引到char字符的值
-	 *
 	 * @return 在index中字符的代码点
-	 *
 	 * @throws IndexOutOfBoundsException 如果index参数为负，或者不小于该字符串的长度
 	 * @since 1.5
 	 */
@@ -1202,14 +1101,11 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * returned. If the {@code char} value at {@code index -
 	 * 1} is an unpaired low-surrogate or a high-surrogate, the
 	 * surrogate value is returned.
-	 *
 	 * @param index the index following the code point that should be returned
-	 *
 	 * @return the Unicode code point value before the given index.
-	 *
 	 * @throws IndexOutOfBoundsException if the {@code index}
-	 * argument is less than 1 or greater than the length
-	 * of this string.
+	 *                                   argument is less than 1 or greater than the length
+	 *                                   of this string.
 	 * @since 1.5
 	 */
 	public int codePointBefore(int index) {
@@ -1228,19 +1124,16 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * length (in {@code char}s) of the text range is
 	 * {@code endIndex-beginIndex}. Unpaired surrogates within
 	 * the text range count as one code point each.
-	 *
 	 * @param beginIndex the index to the first {@code char} of
-	 * the text range.
-	 * @param endIndex the index after the last {@code char} of
-	 * the text range.
-	 *
+	 *                   the text range.
+	 * @param endIndex   the index after the last {@code char} of
+	 *                   the text range.
 	 * @return the number of Unicode code points in the specified text
 	 * range
-	 *
 	 * @throws IndexOutOfBoundsException if the
-	 * {@code beginIndex} is negative, or {@code endIndex}
-	 * is larger than the length of this {@code String}, or
-	 * {@code beginIndex} is larger than {@code endIndex}.
+	 *                                   {@code beginIndex} is negative, or {@code endIndex}
+	 *                                   is larger than the length of this {@code String}, or
+	 *                                   {@code beginIndex} is larger than {@code endIndex}.
 	 * @since 1.5
 	 */
 	public int codePointCount(int beginIndex, int endIndex) {
@@ -1257,20 +1150,17 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * {@code codePointOffset} code points. Unpaired surrogates
 	 * within the text range given by {@code index} and
 	 * {@code codePointOffset} count as one code point each.
-	 *
-	 * @param index the index to be offset
+	 * @param index           the index to be offset
 	 * @param codePointOffset the offset in code points
-	 *
 	 * @return the index within this {@code String}
-	 *
 	 * @throws IndexOutOfBoundsException if {@code index}
-	 * is negative or larger then the length of this
-	 * {@code String}, or if {@code codePointOffset} is positive
-	 * and the substring starting with {@code index} has fewer
-	 * than {@code codePointOffset} code points,
-	 * or if {@code codePointOffset} is negative and the substring
-	 * before {@code index} has fewer than the absolute value
-	 * of {@code codePointOffset} code points.
+	 *                                   is negative or larger then the length of this
+	 *                                   {@code String}, or if {@code codePointOffset} is positive
+	 *                                   and the substring starting with {@code index} has fewer
+	 *                                   than {@code codePointOffset} code points,
+	 *                                   or if {@code codePointOffset} is negative and the substring
+	 *                                   before {@code index} has fewer than the absolute value
+	 *                                   of {@code codePointOffset} code points.
 	 * @since 1.5
 	 */
 	public int offsetByCodePoints(int index, int codePointOffset) {
@@ -1297,16 +1187,14 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * The characters are copied into the
 	 * subarray of {@code dst} starting at index {@code dstBegin}
 	 * and ending at index:  dstBegin + (srcEnd-srcBegin) - 1
-	 *
 	 * @param srcBegin 索引字符串中的第一个字符去拷贝
-	 * @param srcEnd 索引后面的字符串中的最后一个字符去拷贝
-	 * @param dst 目标数组
+	 * @param srcEnd   索引后面的字符串中的最后一个字符去拷贝
+	 * @param dst      目标数组
 	 * @param dstBegin 在目标数组中开始偏移。
-	 *
 	 * @throws IndexOutOfBoundsException 如果下面情况为真的报异常：
-	 * begin小于0
-	 * end比字符传总数大
-	 * begin大于end
+	 *                                   begin小于0
+	 *                                   end比字符传总数大
+	 *                                   begin大于end
 	 */
 	public void getChars(int srcBegin, int srcEnd, char dst[], int dstBegin) {
 		if (srcBegin < 0) {
@@ -1331,7 +1219,6 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * 因此，要复制的字符总数是end-begin
 	 * <p>
 	 * 转换成字节的字符被复制到dst的子数组中，从索引dstBegin和结束于索引:dstBegin + (srcEnd-srcBegin) - 1
-	 *
 	 * @deprecated 此方法不能正确地将字符转换成字节。 As of JDK&nbsp;1.1, the preferred way to do this is via the
 	 * {@link #getBytes()} method, which uses the platform's default charset.
 	 */
@@ -1364,7 +1251,6 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * 当这个字符串不能被编码到给定的字符集时，该方法的行为是未指定的。
 	 * <p>
 	 * 当需要对编码过程进行更多的控制时，应该使用Charset Encoder类。
-	 *
 	 * @throws UnsupportedEncodingException 如果字符集是不支持的就报异常
 	 * @since JDK1.1
 	 */
@@ -1461,24 +1347,28 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * String和指定的CharSequence字符序列进行比较。
 	 * 只有在字符序列的的char值序列和指定字符序列相同时返回true。
 	 * 注意，如果CharSequence是一个StringBuffer那么方法会同步它。
+	 * @param cs 字符序列
+	 * @return
 	 */
 	public boolean contentEquals(CharSequence cs) {
-		// 		参数是一个字符串缓冲区StringBuffer，字符串构建器StringBuilder
-
+		//参数是一个字符串缓冲区StringBuffer，字符串构建器StringBuilder
 		if (cs instanceof AbstractStringBuilder) {
 			if (cs instanceof StringBuffer) {
+				//保证同一时间只有一个线程执行该段代码
 				synchronized (cs) {
+					//强转成AbstractStringBuilder，StringBuilder、StringBuffer都继承于AbstractStringBuilder
 					return nonSyncContentEquals((AbstractStringBuilder) cs);
 				}
 			} else {
 				return nonSyncContentEquals((AbstractStringBuilder) cs);
 			}
 		}
-		// Argument is a String
+		//参数是个字符串String
 		if (cs instanceof String) {
+
 			return equals(cs);
 		}
-		// Argument is a generic CharSequence
+		//参数是一个通用的字符序列
 		char v1[] = value;
 		int n = v1.length;
 		if (n != cs.length()) {
@@ -1493,10 +1383,9 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	}
 
 	/**
-	 * Compares this {@code String} to another {@code String}, ignoring case
-	 * considerations.  Two strings are considered equal ignoring case if they
-	 * are of the same length and corresponding characters in the two strings
-	 * are equal ignoring case.
+	 * 比较这个字符串和另一个字符串,忽略考虑情况下。
+	 * 这个情况是认为相等的，两个字符串的长度相等，对应的每个字符相等。
+	 * <p>
 	 * <p>
 	 * <p> Two characters {@code c1} and {@code c2} are considered the same
 	 * ignoring case if at least one of the following is true:
@@ -1510,13 +1399,10 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * java.lang.Character#toLowerCase(char)} to each character
 	 * produces the same result
 	 * </ul>
-	 *
 	 * @param anotherString The {@code String} to compare this {@code String} against
-	 *
 	 * @return {@code true} if the argument is not {@code null} and it
 	 * represents an equivalent {@code String} ignoring case; {@code
 	 * false} otherwise
-	 *
 	 * @see #equals(Object)
 	 */
 	public boolean equalsIgnoreCase(String anotherString) {
@@ -1558,9 +1444,7 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * <blockquote><pre>
 	 * this.length()-anotherString.length()
 	 * </pre></blockquote>
-	 *
 	 * @param anotherString the {@code String} to be compared.
-	 *
 	 * @return the value {@code 0} if the argument string is equal to
 	 * this string; a value less than {@code 0} if this string
 	 * is lexicographically less than the string argument; and a
@@ -1598,13 +1482,10 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * and will result in an unsatisfactory ordering for certain locales.
 	 * The java.text package provides <em>collators</em> to allow
 	 * locale-sensitive ordering.
-	 *
 	 * @param str the {@code String} to be compared.
-	 *
 	 * @return a negative integer, zero, or a positive integer as the
 	 * specified String is greater than, equal to, or less
 	 * than this String, ignoring case considerations.
-	 *
 	 * @see java.text.Collator#compare(String, String)
 	 * @since 1.2
 	 */
@@ -1634,13 +1515,11 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * {@code this.charAt(toffset + }<i>k</i>{@code ) != other.charAt(ooffset + }
 	 * <i>k</i>{@code )}
 	 * </ul>
-	 *
 	 * @param toffset the starting offset of the subregion in this string.
-	 * @param other the string argument.
+	 * @param other   the string argument.
 	 * @param ooffset the starting offset of the subregion in the string
-	 * argument.
-	 * @param len the number of characters to compare.
-	 *
+	 *                argument.
+	 * @param len     the number of characters to compare.
 	 * @return {@code true} if the specified subregion of this string
 	 * exactly matches the specified subregion of the string argument;
 	 * {@code false} otherwise.
@@ -1697,16 +1576,14 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 *         Character.toUpperCase(other.charAt(ooffset+k))
 	 * </pre></blockquote>
 	 * </ul>
-	 *
 	 * @param ignoreCase if {@code true}, ignore case when comparing
-	 * characters.
-	 * @param toffset the starting offset of the subregion in this
-	 * string.
-	 * @param other the string argument.
-	 * @param ooffset the starting offset of the subregion in the string
-	 * argument.
-	 * @param len the number of characters to compare.
-	 *
+	 *                   characters.
+	 * @param toffset    the starting offset of the subregion in this
+	 *                   string.
+	 * @param other      the string argument.
+	 * @param ooffset    the starting offset of the subregion in the string
+	 *                   argument.
+	 * @param len        the number of characters to compare.
 	 * @return {@code true} if the specified subregion of this string
 	 * matches the specified subregion of the string argument;
 	 * {@code false} otherwise. Whether the matching is exact
@@ -1754,10 +1631,8 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	/**
 	 * Tests if the substring of this string beginning at the
 	 * specified index starts with the specified prefix.
-	 *
-	 * @param prefix the prefix.
+	 * @param prefix  the prefix.
 	 * @param toffset where to begin looking in this string.
-	 *
 	 * @return {@code true} if the character sequence represented by the
 	 * argument is a prefix of the substring of this object starting
 	 * at index {@code toffset}; {@code false} otherwise.
@@ -1789,9 +1664,7 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 
 	/**
 	 * Tests if this string starts with the specified prefix.
-	 *
 	 * @param prefix the prefix.
-	 *
 	 * @return {@code true} if the character sequence represented by the
 	 * argument is a prefix of the character sequence represented by
 	 * this string; {@code false} otherwise.
@@ -1799,7 +1672,6 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * argument is an empty string or is equal to this
 	 * {@code String} object as determined by the
 	 * {@link #equals(Object)} method.
-	 *
 	 * @since 1. 0
 	 */
 	public boolean startsWith(String prefix) {
@@ -1808,9 +1680,7 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 
 	/**
 	 * Tests if this string ends with the specified suffix.
-	 *
 	 * @param suffix the suffix.
-	 *
 	 * @return {@code true} if the character sequence represented by the
 	 * argument is a suffix of the character sequence represented by
 	 * this object; {@code false} otherwise. Note that the
@@ -1832,7 +1702,6 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * <i>i</i>th character of the string, {@code n} is the length of
 	 * the string, and {@code ^} indicates exponentiation.
 	 * (The hash value of the empty string is zero.)
-	 *
 	 * @return a hash code value for this object.
 	 */
 	public int hashCode() {
@@ -1866,9 +1735,7 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * </pre></blockquote>
 	 * is true. In either case, if no such character occurs in this
 	 * string, then {@code -1} is returned.
-	 *
 	 * @param ch a character (Unicode code point).
-	 *
 	 * @return the index of the first occurrence of the character in the
 	 * character sequence represented by this object, or
 	 * {@code -1} if the character does not occur.
@@ -1908,10 +1775,8 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * <p>
 	 * <p>All indices are specified in {@code char} values
 	 * (Unicode code units).
-	 *
-	 * @param ch a character (Unicode code point).
+	 * @param ch        a character (Unicode code point).
 	 * @param fromIndex the index to start the search from.
-	 *
 	 * @return the index of the first occurrence of the character in the
 	 * character sequence represented by this object that is greater
 	 * than or equal to {@code fromIndex}, or {@code -1}
@@ -1976,9 +1841,7 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * string, then {@code -1} is returned.  The
 	 * {@code String} is searched backwards starting at the last
 	 * character.
-	 *
 	 * @param ch a character (Unicode code point).
-	 *
 	 * @return the index of the last occurrence of the character in the
 	 * character sequence represented by this object, or
 	 * {@code -1} if the character does not occur.
@@ -2007,16 +1870,14 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * <p>
 	 * <p>All indices are specified in {@code char} values
 	 * (Unicode code units).
-	 *
-	 * @param ch a character (Unicode code point).
+	 * @param ch        a character (Unicode code point).
 	 * @param fromIndex the index to start the search from. There is no
-	 * restriction on the value of {@code fromIndex}. If it is
-	 * greater than or equal to the length of this string, it has
-	 * the same effect as if it were equal to one less than the
-	 * length of this string: this entire string may be searched.
-	 * If it is negative, it has the same effect as if it were -1:
-	 * -1 is returned.
-	 *
+	 *                  restriction on the value of {@code fromIndex}. If it is
+	 *                  greater than or equal to the length of this string, it has
+	 *                  the same effect as if it were equal to one less than the
+	 *                  length of this string: this entire string may be searched.
+	 *                  If it is negative, it has the same effect as if it were -1:
+	 *                  -1 is returned.
 	 * @return the index of the last occurrence of the character in the
 	 * character sequence represented by this object that is less
 	 * than or equal to {@code fromIndex}, or {@code -1}
@@ -2066,9 +1927,7 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * this.startsWith(str, <i>k</i>)
 	 * </pre></blockquote>
 	 * If no such value of <i>k</i> exists, then {@code -1} is returned.
-	 *
 	 * @param str the substring to search for.
-	 *
 	 * @return the index of the first occurrence of the specified substring,
 	 * or {@code -1} if there is no such occurrence.
 	 */
@@ -2085,10 +1944,8 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * <i>k</i> &gt;= fromIndex {@code &&} this.startsWith(str, <i>k</i>)
 	 * </pre></blockquote>
 	 * If no such value of <i>k</i> exists, then {@code -1} is returned.
-	 *
-	 * @param str the substring to search for.
+	 * @param str       the substring to search for.
 	 * @param fromIndex the index from which to start the search.
-	 *
 	 * @return the index of the first occurrence of the specified substring,
 	 * starting at the specified index,
 	 * or {@code -1} if there is no such occurrence.
@@ -2107,9 +1964,7 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * this.startsWith(str, <i>k</i>)
 	 * </pre></blockquote>
 	 * If no such value of <i>k</i> exists, then {@code -1} is returned.
-	 *
 	 * @param str the substring to search for.
-	 *
 	 * @return the index of the last occurrence of the specified substring,
 	 * or {@code -1} if there is no such occurrence.
 	 */
@@ -2126,10 +1981,8 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * <i>k</i> {@code <=} fromIndex {@code &&} this.startsWith(str, <i>k</i>)
 	 * </pre></blockquote>
 	 * If no such value of <i>k</i> exists, then {@code -1} is returned.
-	 *
-	 * @param str the substring to search for.
+	 * @param str       the substring to search for.
 	 * @param fromIndex the index to start the search from.
-	 *
 	 * @return the index of the last occurrence of the specified substring,
 	 * searching backward from the specified index,
 	 * or {@code -1} if there is no such occurrence.
@@ -2148,14 +2001,11 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * "Harbison".substring(3) returns "bison"
 	 * "emptiness".substring(9) returns "" (an empty string)
 	 * </pre></blockquote>
-	 *
 	 * @param beginIndex the beginning index, inclusive.
-	 *
 	 * @return the specified substring.
-	 *
 	 * @throws IndexOutOfBoundsException if
-	 * {@code beginIndex} is negative or larger than the
-	 * length of this {@code String} object.
+	 *                                   {@code beginIndex} is negative or larger than the
+	 *                                   length of this {@code String} object.
 	 */
 	public String substring(int beginIndex) {
 		if (beginIndex < 0) {
@@ -2179,18 +2029,15 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * "hamburger".substring(4, 8) returns "urge"
 	 * "smiles".substring(1, 5) returns "mile"
 	 * </pre></blockquote>
-	 *
 	 * @param beginIndex the beginning index, inclusive.
-	 * @param endIndex the ending index, exclusive.
-	 *
+	 * @param endIndex   the ending index, exclusive.
 	 * @return the specified substring.
-	 *
 	 * @throws IndexOutOfBoundsException if the
-	 * {@code beginIndex} is negative, or
-	 * {@code endIndex} is larger than the length of
-	 * this {@code String} object, or
-	 * {@code beginIndex} is larger than
-	 * {@code endIndex}.
+	 *                                   {@code beginIndex} is negative, or
+	 *                                   {@code endIndex} is larger than the length of
+	 *                                   this {@code String} object, or
+	 *                                   {@code beginIndex} is larger than
+	 *                                   {@code endIndex}.
 	 */
 	public String substring(int beginIndex, int endIndex) {
 		if (beginIndex < 0) {
@@ -2218,15 +2065,12 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * <p>
 	 * <blockquote><pre>
 	 * str.substring(begin,&nbsp;end)</pre></blockquote>
-	 *
 	 * @param beginIndex the begin index, inclusive.
-	 * @param endIndex the end index, exclusive.
-	 *
+	 * @param endIndex   the end index, exclusive.
 	 * @return the specified subsequence.
-	 *
 	 * @throws IndexOutOfBoundsException if {@code beginIndex} or {@code endIndex} is negative,
-	 * if {@code endIndex} is greater than {@code length()},
-	 * or if {@code beginIndex} is greater than {@code endIndex}
+	 *                                   if {@code endIndex} is greater than {@code length()},
+	 *                                   or if {@code beginIndex} is greater than {@code endIndex}
 	 * @apiNote This method is defined so that the {@code String} class can implement
 	 * the {@link CharSequence} interface.
 	 * @spec JSR-51
@@ -2250,10 +2094,8 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * "cares".concat("s") returns "caress"
 	 * "to".concat("get").concat("her") returns "together"
 	 * </pre></blockquote>
-	 *
 	 * @param str the {@code String} that is concatenated to the end
-	 * of this {@code String}.
-	 *
+	 *            of this {@code String}.
 	 * @return a string that represents the concatenation of this object's
 	 * characters followed by the string argument's characters.
 	 */
@@ -2291,10 +2133,8 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 *         returns "starring with a turtle tortoise"
 	 * "JonL".replace('q', 'x') returns "JonL" (no change)
 	 * </pre></blockquote>
-	 *
 	 * @param oldChar the old character.
 	 * @param newChar the new character.
-	 *
 	 * @return a string derived from this string by replacing every
 	 * occurrence of {@code oldChar} with {@code newChar}.
 	 */
@@ -2337,12 +2177,9 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * {@link java.util.regex.Pattern}.{@link java.util.regex.Pattern#matches(String, CharSequence)
 	 * matches(<i>regex</i>, <i>str</i>)}
 	 * </blockquote>
-	 *
 	 * @param regex the regular expression to which this string is to be matched
-	 *
 	 * @return {@code true} if, and only if, this string matches the
 	 * given regular expression
-	 *
 	 * @throws PatternSyntaxException if the regular expression's syntax is invalid
 	 * @spec JSR-51
 	 * @see java.util.regex.Pattern
@@ -2355,11 +2192,8 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	/**
 	 * Returns true if and only if this string contains the specified
 	 * sequence of char values.
-	 *
 	 * @param s the sequence to search for
-	 *
 	 * @return true if this string contains {@code s}, false otherwise
-	 *
 	 * @since 1.5
 	 */
 	public boolean contains(CharSequence s) {
@@ -2391,12 +2225,9 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * {@link java.util.regex.Matcher#replaceFirst}.
 	 * Use {@link java.util.regex.Matcher#quoteReplacement} to suppress the special
 	 * meaning of these characters, if desired.
-	 *
-	 * @param regex the regular expression to which this string is to be matched
+	 * @param regex       the regular expression to which this string is to be matched
 	 * @param replacement the string to be substituted for the first match
-	 *
 	 * @return The resulting {@code String}
-	 *
 	 * @throws PatternSyntaxException if the regular expression's syntax is invalid
 	 * @spec JSR-51
 	 * @see java.util.regex.Pattern
@@ -2431,12 +2262,9 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * {@link java.util.regex.Matcher#replaceAll Matcher.replaceAll}.
 	 * Use {@link java.util.regex.Matcher#quoteReplacement} to suppress the special
 	 * meaning of these characters, if desired.
-	 *
-	 * @param regex the regular expression to which this string is to be matched
+	 * @param regex       the regular expression to which this string is to be matched
 	 * @param replacement the string to be substituted for each match
-	 *
 	 * @return The resulting {@code String}
-	 *
 	 * @throws PatternSyntaxException if the regular expression's syntax is invalid
 	 * @spec JSR-51
 	 * @see java.util.regex.Pattern
@@ -2452,12 +2280,9 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * replacement proceeds from the beginning of the string to the end, for
 	 * example, replacing "aa" with "b" in the string "aaa" will result in
 	 * "ba" rather than "ab".
-	 *
-	 * @param target The sequence of char values to be replaced
+	 * @param target      The sequence of char values to be replaced
 	 * @param replacement The replacement sequence of char values
-	 *
 	 * @return The resulting string
-	 *
 	 * @since 1.5
 	 */
 	public String replace(CharSequence target, CharSequence replacement) {
@@ -2531,13 +2356,10 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * java.util.regex.Pattern#split(java.lang.CharSequence, int) split}(<i>str</i>,&nbsp;<i>n</i>)
 	 * </code>
 	 * </blockquote>
-	 *
 	 * @param regex the delimiting regular expression
 	 * @param limit the result threshold, as described above
-	 *
 	 * @return the array of strings computed by splitting this string
 	 * around matches of the given regular expression
-	 *
 	 * @throws PatternSyntaxException if the regular expression's syntax is invalid
 	 * @spec JSR-51
 	 * @see java.util.regex.Pattern
@@ -2614,12 +2436,9 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * <tr><td align=center>o</td>
 	 * <td>{@code { "b", "", ":and:f" }}</td></tr>
 	 * </table></blockquote>
-	 *
 	 * @param regex the delimiting regular expression
-	 *
 	 * @return the array of strings computed by splitting this string
 	 * around matches of the given regular expression
-	 *
 	 * @throws PatternSyntaxException if the regular expression's syntax is invalid
 	 * @spec JSR-51
 	 * @see java.util.regex.Pattern
@@ -2673,11 +2492,8 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * <td>lowercased all chars in String</td>
 	 * </tr>
 	 * </table>
-	 *
 	 * @param locale use the case transformation rules for this locale
-	 *
 	 * @return the {@code String}, converted to lowercase.
-	 *
 	 * @see java.lang.String#toLowerCase()
 	 * @see java.lang.String#toUpperCase()
 	 * @see java.lang.String#toUpperCase(Locale)
@@ -2783,9 +2599,7 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * To obtain correct results for locale insensitive strings, use
 	 * {@code toLowerCase(Locale.ROOT)}.
 	 * <p>
-	 *
 	 * @return the {@code String}, converted to lowercase.
-	 *
 	 * @see java.lang.String#toLowerCase(Locale)
 	 */
 	public String toLowerCase() {
@@ -2833,11 +2647,8 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * <td></td>
 	 * </tr>
 	 * </table>
-	 *
 	 * @param locale use the case transformation rules for this locale
-	 *
 	 * @return the {@code String}, converted to uppercase.
-	 *
 	 * @see java.lang.String#toUpperCase()
 	 * @see java.lang.String#toLowerCase()
 	 * @see java.lang.String#toLowerCase(Locale)
@@ -2946,9 +2757,7 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * To obtain correct results for locale insensitive strings, use
 	 * {@code toUpperCase(Locale.ROOT)}.
 	 * <p>
-	 *
 	 * @return the {@code String}, converted to uppercase.
-	 *
 	 * @see java.lang.String#toUpperCase(Locale)
 	 */
 	public String toUpperCase() {
@@ -2981,7 +2790,6 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * <p>
 	 * This method may be used to trim whitespace (as defined above) from
 	 * the beginning and end of a string.
-	 *
 	 * @return A string whose value is this string, with any leading and trailing white
 	 * space removed, or this string if it has no leading or
 	 * trailing white space.
@@ -3002,7 +2810,6 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 
 	/**
 	 * This object (which is already a string!) is itself returned.
-	 *
 	 * @return the string itself.
 	 */
 	public String toString() {
@@ -3011,7 +2818,6 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 
 	/**
 	 * Converts this string to a new character array.
-	 *
 	 * @return a newly allocated character array whose length is the length
 	 * of this string and whose contents are initialized to contain
 	 * the character sequence represented by this string.
@@ -3042,7 +2848,6 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 	 * All literal strings and string-valued constant expressions are
 	 * interned. String literals are defined in section 3.10.5 of the
 	 * <cite>The Java&trade; Language Specification</cite>.
-	 *
 	 * @return a string that has the same contents as this string, but is
 	 * guaranteed to be from a pool of unique strings.
 	 */
